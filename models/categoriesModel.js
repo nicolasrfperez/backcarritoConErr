@@ -1,17 +1,12 @@
 const mongoose = require("../bin/mongodb");
 
 const categorySchema = new mongoose.Schema({
-    name: String
-});
-categorySchema.statics.findBydIdAndValidate = async function(id){
-    const document = await this.findById(id);
-    if(!document){
-        return{
-            error:true,
-            message:"No existe categoria"
-        }
-
+    name: {
+        type:String,
+        required:[true,"El campo name es obligatorio"],
+        minlength:1,
+        maxlength:100
     }
-    return document;
-}
+})
+
 module.exports = mongoose.model("categories", categorySchema)
